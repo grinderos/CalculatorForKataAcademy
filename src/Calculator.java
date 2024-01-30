@@ -6,10 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Calculator {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String in = scanner.nextLine();
-        System.out.println(Main.calc(in.toUpperCase()));
+    public static void main(String[] args) throws Exception{
+            Scanner scanner = new Scanner(System.in);
+            String in = scanner.nextLine();
+            System.out.println(Main.calc(in.toUpperCase()));
     }
 }
 
@@ -27,38 +27,33 @@ class Main {
             "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"
     };
 
-    public static String calc(String in) {
+    public static String calc(String in) throws Exception {
         String operation;
         Integer resultInt;
         boolean ifRomans;
         List<Integer> numsList = new ArrayList<>();
-        try {
-            if (ifRomans = ifRomans(in)) {
-                in = romansToArabs(in);
-            }
-            String line = in.replaceAll(" ", "");
-            String regexSplitter = "\\d+";
-            Pattern pat = Pattern.compile(regexSplitter);
-            Matcher mat = pat.matcher(line);
-            while (mat.find()) {
-                numsList.add(Integer.parseInt(mat.group()));
-            }
-            operation = line.replaceAll(regexSplitter, "");
-            if (numsList.size() != 2 || numsList.get(0) <= 0 || numsList.get(0) > 10
-                    || numsList.get(0) <= 0 || numsList.get(0) > 10) {
-                throw new Exception();
-            }
-            resultInt = doMathOperation(operation, numsList);
-            if (ifRomans && resultInt <= 0 || resultInt == null) {
-                throw new Exception();
-            } else if (ifRomans) {
-                return getRomanNum(resultInt);
-            } else {
-                return String.valueOf(resultInt);
-            }
-        } catch (Exception e) {
-            System.out.print("throw Exception");
-            return "";
+        if (ifRomans = ifRomans(in)) {
+            in = romansToArabs(in);
+        }
+        String line = in.replaceAll(" ", "");
+        String regexSplitter = "\\d+";
+        Pattern pat = Pattern.compile(regexSplitter);
+        Matcher mat = pat.matcher(line);
+        while (mat.find()) {
+            numsList.add(Integer.parseInt(mat.group()));
+        }
+        operation = line.replaceAll(regexSplitter, "");
+        if (numsList.size() != 2 || numsList.get(0) <= 0 || numsList.get(0) > 10
+                || numsList.get(0) <= 0 || numsList.get(0) > 10) {
+            throw new Exception("Неподдерживаемая операция");
+        }
+        resultInt = doMathOperation(operation, numsList);
+        if (ifRomans && resultInt <= 0 || resultInt == null) {
+            throw new Exception("Неподдерживаемая операция");
+        } else if (ifRomans) {
+            return getRomanNum(resultInt);
+        } else {
+            return String.valueOf(resultInt);
         }
     }
 
@@ -81,7 +76,7 @@ class Main {
         String regex = "[IVXLC]";
         Pattern pat = Pattern.compile(regex);
         Matcher mat = pat.matcher(in);
-        return mat.find()? true: false;
+        return mat.find() ? true : false;
     }
 
     static String romansToArabs(String in) {
