@@ -9,7 +9,7 @@ public class Calculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String in = scanner.nextLine();
-        System.out.println(Main.calc(in));
+        System.out.println(Main.calc(in.toUpperCase()));
     }
 }
 
@@ -29,8 +29,8 @@ class Main {
 
     public static String calc(String in) {
         String operation;
-        Integer resultInt = 0;
-        boolean ifRomans = false;
+        Integer resultInt;
+        boolean ifRomans;
         List<Integer> numsList = new ArrayList<>();
         try {
             if (ifRomans = ifRomans(in)) {
@@ -81,23 +81,19 @@ class Main {
         String regex = "[IVXLC]";
         Pattern pat = Pattern.compile(regex);
         Matcher mat = pat.matcher(in);
-        while (mat.find()) {
-            return true;
-        }
-        return false;
+        return mat.find()? true: false;
     }
 
     static String romansToArabs(String in) {
-        StringBuilder out = new StringBuilder();
         String line = in.replaceAll(" ", "");
         String regex = "[+\\-/*]";
         String[] nums = line.split(regex);
         Pattern pat = Pattern.compile(regex);
         Matcher mat = pat.matcher(line);
-        while (mat.find()) {
+        if (mat.find())
             return getArabNum(nums[0]) + mat.group() + getArabNum(nums[1]);
-        }
-        return null;
+        else
+            return null;
     }
 
     static String getArabNum(String in) {
